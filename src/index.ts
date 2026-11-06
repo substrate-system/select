@@ -1,11 +1,11 @@
 import { WebComponent } from '@substrate-system/web-component'
 import Debug from '@substrate-system/debug'
-const debug = Debug('{{component-name}}')
+const debug = Debug('substrate-select')
 
 // for docuement.querySelector
 declare global {
     interface HTMLElementTagNameMap {
-        '{{component-name}}': Example
+        'substrate-select': Example
     }
 }
 
@@ -15,10 +15,10 @@ declare global {
  * *instance* field defaulting to `''`, and `emit`/`on` namespace from
  * that instance field while `static event()` reads the static one.
  * Setting only `static TAG` therefore emits `':hello'` while listeners
- * built from `Example.event('hello')` expect `'{{component-name}}:hello'`,
+ * built from `Example.event('hello')` expect `'substrate-select:hello'`,
  * and nothing fires. `create` sets both.
  */
-export class Example extends WebComponent.create('{{component-name}}') {
+export class Example extends WebComponent.create('substrate-select') {
     /**
      * Attributes that reflect to properties. The base class generates
      * the getters and setters, and derives `observedAttributes` from
