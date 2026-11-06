@@ -16,6 +16,7 @@ options this template picked and why.
 | [ADR-007](ADR-007-dual-format-distribution.md) | Ship ESM and CJS, keep compiled output out of git | 2026-07-28 |
 | [ADR-008](ADR-008-browser-tests.md) | Run tests in a real browser | 2026-07-28 |
 | [ADR-009](ADR-009-self-deleting-scaffold.md) | Scaffold once with a self-deleting CLI | 2026-07-28 |
+| [ADR-010](ADR-010-native-select.md) | Wrap a native select and enhance it with base-select | 2026-11-06 |
 
 These describe `@substrate-system/web-component` `^0.0.56`. That version
 is required, not incidental: reflected attributes (ADR-004) are absent

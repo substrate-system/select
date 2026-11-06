@@ -39,12 +39,30 @@ so the template's own README does not survive scaffolding.
 
 Words used while writing the component itself.
 
-**`Example`** -- The placeholder class name exported from `src/index.ts`.
-Scaffold does not rename it, since the class name is not a template
-variable. Rename it by hand after scaffolding.
+**`SubstrateSelect`** -- The class exported from `src/index.ts`, the
+`<substrate-select>` element. It wraps a native `<select>`; see
+[ADR-010](adr/ADR-010-native-select.md).
 
 **Change Handler** -- A method named `handleChange_<attribute>`, called by
-`attributeChangedCallback` when that attribute changes. The dispatch is
-by convention, not registration: adding an attribute means listing it in
-`static observedAttributes` *and* adding the matching method. A missing
-handler is silently skipped, and the component still re-renders.
+`attributeChangedCallback` with `(oldValue, newValue)` when that
+attribute changes. The base class derives `observedAttributes` from
+`reflectedStringAttributes` and `reflectedBooleanAttributes`; to observe
+another attribute, extend it with `[...super.observedAttributes, ...]`.
+The dispatch is by convention, not registration: a missing handler is
+silently skipped, and nothing re-renders automatically.
+
+**Authored Options** -- The `<option>` and `<optgroup>` children written
+inside `<substrate-select>`, which the component moves into its inner
+select.
+
+**base-select** -- The CSS value `appearance: base-select`, which makes
+a native select and its picker fully styleable. Used only inside
+`@supports`.
+
+**Picker** -- The dropdown list a select opens, styled with
+`::picker(select)`. `::picker-icon` is its chevron and `::checkmark`
+marks the chosen option.
+
+**Token** -- A `--substrate-select-*` custom property consumers can
+override. Most fall back to a shared `--substrate-*` variable, then to
+a default; the rest have only a default.

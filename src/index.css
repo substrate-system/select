@@ -1,10 +1,197 @@
+substrate-select {
+    /*
+        Tokens. Most fall back to the shared --substrate-* variable,
+        then to ambling's value; option-hover, checked, and shadow have
+        only a value. Every color literal in this file is in this block.
+    */
+    --substrate-select-text: var(--substrate-text, black);
+    --substrate-select-surface: var(--substrate-surface, white);
+    --substrate-select-border: var(--substrate-border, #9b9b9b);
+    --substrate-select-accent: var(--substrate-accent, #2563eb);
+    --substrate-select-focus: var(--substrate-focus, #2563eb);
+    --substrate-select-focus-width: var(--substrate-focus-width, 2px);
+    --substrate-select-focus-offset: var(--substrate-focus-offset, 2px);
+    --substrate-select-radius: var(--substrate-radius, 0);
+    --substrate-select-option-hover: #f3f4f6;
+    --substrate-select-checked: #1d4ed8;
+    --substrate-select-shadow: 0 4px 12px #21212114;
+
+    display: grid;
+    gap: 0.25rem;
+
+    /*
+        Every browser: an outlined trigger and a chevron drawn with two
+        gradients. Padding and border match substrate-input, so a select
+        and an input side by side line up.
+    */
+    & select {
+        appearance: none;
+        box-sizing: border-box;
+        max-width: 100%;
+        font: inherit;
+        color: var(--substrate-select-text);
+        background-color: var(--substrate-select-surface);
+
+        /* two diagonal strokes, side by side, meet in a chevron */
+        background-image:
+            linear-gradient(
+                45deg,
+                transparent calc(50% - 0.07rem),
+                currentcolor calc(50% - 0.07rem),
+                currentcolor calc(50% + 0.07rem),
+                transparent calc(50% + 0.07rem)
+            ),
+            linear-gradient(
+                -45deg,
+                transparent calc(50% - 0.07rem),
+                currentcolor calc(50% - 0.07rem),
+                currentcolor calc(50% + 0.07rem),
+                transparent calc(50% + 0.07rem)
+            );
+        background-position:
+            calc(100% - 1.4rem) calc(50% + 0.1rem),
+            calc(100% - 1rem) calc(50% + 0.1rem);
+        background-size: 0.4rem 0.4rem;
+        background-repeat: no-repeat;
+        border: 1px solid var(--substrate-select-border);
+        border-radius: var(--substrate-select-radius);
+        padding: 1rem 2.75rem 0.8rem 1rem;
+        outline: var(--substrate-select-focus-width) solid transparent;
+        outline-offset: var(--substrate-select-focus-offset);
+        cursor: pointer;
+        transition: border-color 0.2s, outline-color 0.2s;
+
+        /* a disabled select does not invite a click */
+        &:hover:not(:disabled) {
+            border-color: var(--substrate-select-accent);
+        }
+
+        &:focus-visible {
+            outline-color: var(--substrate-select-focus);
+        }
+
+        &:disabled {
+            cursor: not-allowed;
+            opacity: 0.6;
+        }
+    }
+
+    /*
+        Customizable select: a styled picker list, a chevron that turns
+        when the picker is open, and a checkmark on the chosen option.
+        Rules naming the new pseudo-elements stay inside @supports: a
+        browser that does not know one drops the whole selector list.
+    */
+    @supports (appearance: base-select) {
+        & select,
+        & select::picker(select) {
+            appearance: base-select;
+        }
+
+        & select {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            background-image: none;
+            padding-inline-end: 1rem;
+
+            /*
+                With no option chosen the button has no line box. Keep
+                one line plus padding and border, so an empty select is
+                as tall as a filled one.
+            */
+            min-block-size: calc(1lh + 1.8rem + 2px);
+
+            &::picker-icon {
+                content: "";
+                box-sizing: border-box;
+                width: 0.5rem;
+                height: 0.5rem;
+                margin-inline-start: auto;
+                border-right: 0.125rem solid currentcolor;
+                border-bottom: 0.125rem solid currentcolor;
+                transform: translateY(-0.125rem) rotate(45deg);
+                transition: transform 0.2s;
+            }
+
+            &:open::picker-icon {
+                transform: translateY(0.125rem) rotate(225deg);
+            }
+
+            & option {
+                gap: 0.5rem;
+                padding: 0.5rem 0.75rem;
+                cursor: pointer;
+
+                &:hover,
+                &:focus-visible {
+                    background-color: var(--substrate-select-option-hover);
+                }
+
+                &:checked {
+                    color: var(--substrate-select-checked);
+                }
+
+                &::checkmark {
+                    content: "\2713";
+                    color: var(--substrate-select-accent);
+                }
+            }
+        }
+
+        & select::picker(select) {
+            margin-block: 0.25rem;
+            padding-block: 0.25rem;
+            color: var(--substrate-select-text);
+            background-color: var(--substrate-select-surface);
+            border: 1px solid var(--substrate-select-border);
+            border-radius: var(--substrate-select-radius);
+            box-shadow: var(--substrate-select-shadow);
+            opacity: 0;
+            translate: 0 -0.5rem;
+            transition:
+                opacity 0.15s,
+                translate 0.15s,
+                display 0.15s allow-discrete,
+                overlay 0.15s allow-discrete;
+        }
+
+        /* the picker fades and slides in as it opens */
+        & select:open::picker(select) {
+            opacity: 1;
+            translate: 0 0;
+        }
+
+        /* after the rule above, so it wins on entry */
+        @starting-style {
+            & select:open::picker(select) {
+                opacity: 0;
+                translate: 0 -0.5rem;
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            & select::picker-icon,
+            & select::picker(select) {
+                transition: none;
+            }
+
+            & select::picker(select) {
+                translate: 0 0;
+            }
+        }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+        & select {
+            transition: none;
+        }
+    }
+}
+
 /**
  * Don't show until JavaScript is instantiated
  */
 substrate-select:not(:defined) {
 	display: none;
-}
-
-substrate-select {
-    background-color: red;
 }

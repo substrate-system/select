@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Example</title>
+    <title>substrate-select</title>
 
     <!--
       Page level FOUCE guard. Inline, not linked, because it has to
@@ -19,9 +19,87 @@
             html.reduce-fouce { opacity: 1 !important; }
         </style>
     </noscript>
+
+    <style>
+        body {
+            font-family: system-ui, sans-serif;
+            max-width: 40rem;
+            margin: 2rem auto;
+            padding: 0 1rem;
+        }
+
+        section {
+            margin-block: 2rem;
+        }
+    </style>
 </head>
 <body>
-    <substrate-select></substrate-select>
+    <main>
+        <h1>substrate-select</h1>
+
+        <section>
+            <h2>Labeled</h2>
+            <substrate-select label="Favorite color" name="color">
+                <option value="">Choose a color</option>
+                <option value="red">Red</option>
+                <option value="green">Green</option>
+                <option value="blue">Blue</option>
+            </substrate-select>
+        </section>
+
+        <section>
+            <h2>Preselected, with groups</h2>
+            <substrate-select label="Fruit" name="fruit">
+                <optgroup label="Citrus">
+                    <option value="lemon">Lemon</option>
+                    <option value="orange" selected>Orange</option>
+                </optgroup>
+                <optgroup label="Berries">
+                    <option value="raspberry">Raspberry</option>
+                    <option value="blueberry">Blueberry</option>
+                </optgroup>
+            </substrate-select>
+        </section>
+
+        <section>
+            <h2>Disabled</h2>
+            <substrate-select label="Size" name="size" disabled>
+                <option value="s">Small</option>
+                <option value="m" selected>Medium</option>
+                <option value="l">Large</option>
+            </substrate-select>
+        </section>
+
+        <section>
+            <h2>In a form</h2>
+            <form id="order">
+                <substrate-select
+                    id="shipping"
+                    label="Shipping"
+                    name="shipping"
+                    required
+                >
+                    <option value="">Choose shipping</option>
+                    <option value="standard">Standard</option>
+                    <option value="express">Express</option>
+                </substrate-select>
+                <p>
+                    <button type="button" id="add-option">
+                        Add an option
+                    </button>
+                    <button type="submit">Submit</button>
+                </p>
+            </form>
+            <h3>FormData</h3>
+            <pre id="form-output"></pre>
+        </section>
+
+        <section>
+            <h2>Change events</h2>
+            <ol id="change-log"></ol>
+        </section>
+    </main>
+
     <script type="module" src="./index.ts"></script>
-  </body>
+</body>
 </html>
