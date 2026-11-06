@@ -1,12 +1,29 @@
 {
   "name": "@substrate-system/select",
-  "private": true,
-  "type": "module",
   "version": "0.0.0",
-  "main": "dist/index.js",
+  "type": "module",
+  "description": "Select input with style",
   "files": [
     "./dist/*"
   ],
+  "exports": {
+    ".": {
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs"
+    },
+    "./css": "./dist/index.css",
+    "./min/css": "./dist/index.min.css",
+    "./min/*": {
+      "import": "./dist/*.min.js",
+      "require": "./dist/*.min.cjs"
+    },
+    "./*": {
+      "import": "./dist/*.js",
+      "require": "./dist/*.cjs"
+    }
+  },
+  "main": "dist/index.js",
+  "types": "./dist/index.d.ts",
   "scripts": {
     "lint": "eslint \"./**/*.{ts,js}\"",
     "test": "esbuild ./test/index.ts --bundle | tapout",
@@ -23,22 +40,6 @@
     "version": "npm run toc && auto-changelog -p --template keepachangelog --breaking-pattern 'BREAKING CHANGE:' && git add CHANGELOG.md README.md",
     "postversion": "git push --follow-tags && npm publish",
     "prepublishOnly": "npm run build"
-  },
-  "exports": {
-    ".": {
-      "import": "./dist/index.js",
-      "require": "./dist/index.cjs"
-    },
-    "./css": "./dist/index.css",
-    "./min/css": "./dist/index.min.css",
-    "./min/*": {
-      "import": "./dist/*.min.js",
-      "require": "./dist/*.min.cjs"
-    },
-    "./*": {
-      "import": "./dist/*.js",
-      "require": "./dist/*.cjs"
-    }
   },
   "dependencies": {
     "@substrate-system/debug": "^0.9.60",
@@ -65,6 +66,25 @@
     "typescript": "^6.0.2",
     "vite": "^8.0.5"
   },
-  "author": "nichoth <nichoth@nichoth.com> (https://nichoth.com)",
-  "license": "SEE LICENSE IN LICENSE"
+  "keywords": [
+    "select",
+    "html",
+    "web",
+    "component"
+  ],
+  "homepage": "https://github.com/substrate-system/select",
+  "bugs": {
+    "url": "https://github.com/substrate-system/select/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/substrate-system/select.git"
+  },
+  "directories": {
+    "doc": "docs",
+    "example": "example",
+    "test": "test"
+  },
+  "license": "SEE LICENSE IN LICENSE",
+  "author": "nichoth <nichoth@nichoth.com> (https://nichoth.com)"
 }
