@@ -27,8 +27,7 @@ form.addEventListener('submit', ev => {
     output.textContent = lines.join('\n')
 })
 
-// Append options to the host; the component moves them into its
-// select.
+// Append options to the host
 let added = 0
 addButton.addEventListener('click', () => {
     const host = form.querySelector('substrate-select')

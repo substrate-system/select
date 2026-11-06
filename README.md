@@ -9,10 +9,9 @@
 [![license](https://img.shields.io/badge/license-Big_Time-blue?style=flat-square)](LICENSE)
 
 
-A native `<select>` with a consistent, themeable look. Write ordinary
-`<option>` and `<optgroup>` children; the component builds a real
-`<select>` around them, so forms, keyboard use, and accessibility work
-the way the browser already does them.
+A native `<select>` with better CSS. Write ordinary
+`<option>` and `<optgroup>` children. The component builds a `<select>`
+around them. Forms, keyboard use, and accessibility work via the browser.
 
 [See a live demo](https://substrate-system.github.io/select/)
 
@@ -69,6 +68,7 @@ npm i -S @substrate-system/select
     import { SubstrateSelect } from '@substrate-system/select'
 
     const el = document.querySelector('substrate-select')
+    // custom .on method
     el.on('change', ev => console.log(ev.detail.value))
 </script>
 ```
@@ -79,10 +79,10 @@ Preact sets `value` as a property, because the element defines one.
 
 ```js
 import { html } from 'htm/preact'
-import '@substrate-system/select'
+import { SubstrateSelect } from '@substrate-system/select'
 
 function FruitPicker ({ fruit, onChange }) {
-    return html`<substrate-select
+    return html`<${SubstrateSelect.TAG}
         label="Fruit"
         name="fruit"
         value=${fruit}
@@ -90,7 +90,7 @@ function FruitPicker ({ fruit, onChange }) {
     >
         <option value="lemon">Lemon</option>
         <option value="apple">Apple</option>
-    </substrate-select>`
+    <//>`
 }
 ```
 
@@ -195,7 +195,7 @@ Or minified:
 import '@substrate-system/select/min/css'
 ```
 
-### Tokens
+### CSS Variables
 
 The first eight tokens fall back to a shared `--substrate-*` variable,
 then to a default. The last three have only a default.
