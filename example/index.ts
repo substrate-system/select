@@ -1,8 +1,10 @@
 import '../src/index.css'
 import {
     SubstrateSelect,
-    type SubstrateSelectChangeDetail
+    type ChangeDetail
 } from '../src/index.js'
+import Debug from '@substrate-system/debug'
+const debug = Debug('substrate-select')
 
 if (import.meta.env.DEV || import.meta.env.MODE !== 'production') {
     localStorage.setItem('DEBUG', 'substrate-select')
@@ -19,6 +21,7 @@ const addButton = document.getElementById('add-option')!
 // descendant of the form, so FormData sees it with no extra work.
 form.addEventListener('submit', ev => {
     ev.preventDefault()
+    debug('change', ev)
     const lines = Array.from(new FormData(form).entries())
         .map(([key, value]) => `${key}=${String(value)}`)
     output.textContent = lines.join('\n')
@@ -37,9 +40,11 @@ addButton.addEventListener('click', () => {
     host.appendChild(option)
 })
 
+const change = SubstrateSelect.event('change')
+
 // Log every substrate-select:change on the page
-document.addEventListener(SubstrateSelect.event('change'), ev => {
-    const { detail, target } = ev as CustomEvent<SubstrateSelectChangeDetail>
+document.addEventListener(change, ev => {
+    const { detail, target } = ev as CustomEvent<ChangeDetail>
     const item = document.createElement('li')
     const name = (target as SubstrateSelect).name ?? '(no name)'
     item.textContent = `${name}: ${detail.value}`

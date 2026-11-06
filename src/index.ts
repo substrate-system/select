@@ -1,4 +1,3 @@
-// pattern: Imperative Shell
 import { WebComponent } from '@substrate-system/web-component'
 import Debug from '@substrate-system/debug'
 const debug = Debug('substrate-select')
@@ -96,16 +95,7 @@ const UPGRADED_PROPERTIES = [
     'required'
 ]
 
-function isOptionNode (
-    node:Node
-):node is HTMLOptionElement|HTMLOptGroupElement {
-    return (
-        node instanceof HTMLOptionElement ||
-        node instanceof HTMLOptGroupElement
-    )
-}
-
-export interface SubstrateSelectChangeDetail {
+export interface ChangeDetail {
     value:string;
 }
 
@@ -468,7 +458,7 @@ export class SubstrateSelect extends WebComponent.create('substrate-select') {
             // the user's pick replaces a value still waiting for its
             // option
             this.#pendingValue = null
-            this.emit<SubstrateSelectChangeDetail>('change', {
+            this.emit<ChangeDetail>('change', {
                 detail: { value: select.value }
             })
         })
@@ -503,3 +493,10 @@ export class SubstrateSelect extends WebComponent.create('substrate-select') {
 }
 
 SubstrateSelect.define()
+
+function isOptionNode (node:Node):node is HTMLOptionElement|HTMLOptGroupElement {
+    return (
+        node instanceof HTMLOptionElement ||
+        node instanceof HTMLOptGroupElement
+    )
+}
