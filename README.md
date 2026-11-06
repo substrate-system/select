@@ -32,7 +32,7 @@ around them. Forms, keyboard use, and accessibility work via the browser.
   * [Forms](#forms)
 - [CSS](#css)
   * [Import CSS](#import-css)
-  * [Tokens](#tokens)
+  * [CSS Variables](#css-variables)
   * [Browser support](#browser-support)
   * [Avoid a flash of undefined content](#avoid-a-flash-of-undefined-content)
 - [Use](#use)
